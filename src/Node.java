@@ -1,15 +1,26 @@
 import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Node {
 	private Node successor, predecessor;
 	private InetAddress ip;
 	private boolean isConnected;
-	private Integer id;
+	private String id;
 	
 	public Node(InetAddress ip) {
 		this.ip = ip;
 		isConnected = false;
 		id = null;
+	}
+	
+	public void createNodeID() throws NoSuchAlgorithmException {
+		String text = this.getIPAddress().toString();
+		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		byte[] hash = digest.digest(text.getBytes(StandardCharsets.UTF_8));
+		this.setID(hash.toString());
+		
 	}
 	
 	public Node getSuccessor() {
@@ -41,11 +52,11 @@ public class Node {
 		this.isConnected = bool;
 	}
 	
-	public Integer getID() {
+	public String getID() {
 		return id;
 	}
 	
-	public void setID(Integer id) {
+	public void setID(String id) {
 		this.id = id;
 	}
 	
