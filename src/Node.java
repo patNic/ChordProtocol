@@ -1,15 +1,14 @@
 import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.math.BigInteger;
 
 public class Node {
 	private Node successor, predecessor;
 	private InetAddress ip;
 	private boolean isConnected;
-	private String id;
+	private BigInteger id;
 	
 	public Node(InetAddress ip) throws NoSuchAlgorithmException {
 		this.ip = ip;
@@ -29,7 +28,7 @@ public class Node {
 			hex.append(s);
 		}
 		
-		this.setID(hex.toString());
+		this.setID(new BigInteger(hex.toString(),16));
 		
 	}
 	
@@ -62,11 +61,11 @@ public class Node {
 		this.isConnected = bool;
 	}
 	
-	public String getID() {
+	public BigInteger getID() {
 		return id;
 	}
 	
-	public void setID(String id) {
+	public void setID(BigInteger id) {
 		this.id = id;
 	}
 	
