@@ -1,4 +1,6 @@
 import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,7 +21,15 @@ public class Node {
 		String text = this.getIPAddress().toString();
 		MessageDigest digest = MessageDigest.getInstance("SHA-1");
 		byte[] hash = digest.digest(text.getBytes(StandardCharsets.UTF_8));
-		this.setID(hash.toString());
+		StringBuffer hex = new StringBuffer();
+		
+		for(int i = 0; i< hash.length; i++) {
+			String s = Integer.toHexString(0xff & hash[i]);
+			if(hex.length() == 1) hex.append('0');
+			hex.append(s);
+		}
+		
+		this.setID(hex.toString());
 		
 	}
 	
