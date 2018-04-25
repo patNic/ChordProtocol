@@ -9,15 +9,15 @@ public class Node {
 	private boolean isConnected;
 	private String id;
 	
-	public Node(InetAddress ip) {
+	public Node(InetAddress ip) throws NoSuchAlgorithmException {
 		this.ip = ip;
 		isConnected = false;
-		id = null;
+		createNodeID();
 	}
 	
-	public void createNodeID() throws NoSuchAlgorithmException {
+	private void createNodeID() throws NoSuchAlgorithmException {
 		String text = this.getIPAddress().toString();
-		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		MessageDigest digest = MessageDigest.getInstance("SHA-1");
 		byte[] hash = digest.digest(text.getBytes(StandardCharsets.UTF_8));
 		this.setID(hash.toString());
 		
